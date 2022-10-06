@@ -3,6 +3,7 @@ import '../styles/globals.css'
 import { AppProps } from 'next/app'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const AnyComponent = Component as any;
   return (
     <>
       <Head>
@@ -14,7 +15,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta name="description" content="Description" />
         <meta name="keywords" content="Keywords" />
-        <title>Next.js PWA Example</title>
+        <title>ToDo - PWA</title>
 
         <link rel="manifest" href="/manifest.json" />
         <link
@@ -32,7 +33,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#317EFB" />
       </Head>
-      <Component {...pageProps} />
+      <AnyComponent {...pageProps} />
     </>
   )
 }
