@@ -1,6 +1,9 @@
 import Head from 'next/head'
-import '../styles/globals.css'
 import { AppProps } from 'next/app'
+
+import '../../styles/card.css';
+import '../../styles/globals.css'
+import '../../styles/layout.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const AnyComponent = Component as any;
@@ -17,7 +20,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta name="keywords" content="Keywords" />
         <title>ToDo - PWA</title>
 
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="manifest" href="/public/manifest.json" />
         <link
           href="/icons/favicon-16x16.png"
           rel="icon"
