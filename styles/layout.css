@@ -6,6 +6,7 @@
 
 .layout-header-container {
     width: 100%;
+    z-index: 100;
     position: fixed;
     backdrop-filter: blur(10px);
     background-color: rgba(255,255,255,0.75);
@@ -20,9 +21,40 @@
 }
 
 .layout-children {
+    width: 80%;
+    margin-left: 8%;
     padding-top: 120px;
 }
 
 .header-avatar {
+    display: flex;
     margin-left: auto;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.menu-container {
+    width: 100%;
+    position: fixed;
+    padding-top: 120px;
+}
+
+.menu-centered {
+    display: flex;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.menu-item {
+    margin-top: 0;
+    padding-top: 0;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.menu-item:hover {
+    font-size: 30px;
 }

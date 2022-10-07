@@ -4,7 +4,16 @@ import ArticleList from "../components/articlesList";
 
 const Home = () => (
   <Layout>
-    <ArticleList articles={[() => <Article />, () => <Article />]} />
+    <ArticleList articles={[
+      () => <Article fav={false} />,
+      () => <Article fav={true} />,
+      () => <Article fav={false} />,
+      () => <Article fav={true} />,
+      () => <Article fav={false} />,
+      () => <Article fav={true} />,
+      () => <Article fav={false} />,
+      () => <Article fav={true} />,
+    ]} />
   </Layout>
 );
 
