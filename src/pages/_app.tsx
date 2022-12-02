@@ -19,13 +19,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta name="description" content="Description" />
         <meta name="keywords" content="Keywords" />
-        <title>ToDo - PWA</title>
+        <title>Quotidien de merde</title>
 
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#f2f2f2" />
       </Head>
-      {/* @ts-ignore */}
       <UserProvider>
         <AnyComponent {...pageProps} />
       </UserProvider>
