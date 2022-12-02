@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import UserContext from './context';
-import { signIn, getSession } from "next-auth/react";
+import { signIn, getSession, signOut } from "next-auth/react";
 export interface UserProviderProps {
   children: React.ReactNode;
 }
@@ -10,7 +10,8 @@ function UserProvider({ children }: UserProviderProps): JSX.Element {
   const [error, setError] = useState<string | null>(null);
 
   const logout = useCallback((): void => {
-  }, []);
+    signOut();
+  }, [signOut]);
 
   const signup = useCallback(
     async (email: string, password: string, pseudo: string): Promise<boolean> => {
