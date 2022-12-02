@@ -18,6 +18,5 @@ const userSchema = new Schema<IUser>({
   profileImg: String,
 });
 
-const User = model<IUser>('User', userSchema);
 
-export default User;
+export default userSchema;

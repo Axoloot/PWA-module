@@ -21,6 +21,5 @@ const PostSchema = new Schema<IPost>({
   geolocation: Object,
 });
 
-const Post = model<IPost>('Post', PostSchema);
 
-export default Post;
+export default PostSchema;
