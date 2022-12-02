@@ -1,4 +1,4 @@
-import { Post } from "lib/database";
+import Post from "../../../../lib/models/Post";
 
 export default function handler(req, res) {
   try {

@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { model } from "mongoose";
 
 interface IPost {
   id: string;
@@ -12,7 +12,7 @@ interface IPost {
   }
 }
 
-const PostSchema = new Schema<IPost>({
+const PostSchema = new mongoose.Schema<IPost>({
   id: { type: String, required: true },
   title: { type: String, required: true },
   content: { type: String, required: true },
@@ -22,4 +22,4 @@ const PostSchema = new Schema<IPost>({
 });
 
 
-export default PostSchema;
+export default mongoose.models.Post || model("Post", PostSchema);

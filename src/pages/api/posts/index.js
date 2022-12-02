@@ -1,4 +1,6 @@
-import { Post, Subscriptions } from "src/lib/database";
+import { Subscriptions } from "src/lib/database";
+import Post from "../../../lib/models/Post";
+
 import notify from "src/lib/notify";
 
 export default function handler(req, res) {

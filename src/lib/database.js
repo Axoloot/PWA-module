@@ -41,10 +41,3 @@ async function dbConnect() {
 }
 
 dbConnect();
-
-const Post = model < IPost > ('Post', PostSchema);
-const User = model < IUser > ('User', userSchema);
-
-
-
-export default { db: cached.conn, Post, User };

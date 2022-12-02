@@ -1,4 +1,4 @@
-import { User } from "src/lib/database";
+import User from "./models/User";
 import webpush from "web-push";
 
 webpush.setVapidDetails(
