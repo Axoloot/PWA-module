@@ -66,7 +66,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button style={{ backgroundColor: '#F2F2F2', borderRadius: 15, width: 150, height: 50, cursor: 'pointer', marginTop: 60 }}>
-            <Text h4 color="#2d002d">
+            <Text h4 color="#2d002d" style={{ padding: 0, margin: 0 }}>
               CREER
             </Text>
           </button>

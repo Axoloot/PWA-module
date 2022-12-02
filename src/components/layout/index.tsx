@@ -24,7 +24,7 @@ const Layout = ({ children, menuIndex }: any) => {
     <div className="layout-container">
       <div className="layout-header-container">
         <Container>
-          <Header width={width} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+          <Header userUrl={user?.profilImg} width={width} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
         </Container>
       </div>
       {
