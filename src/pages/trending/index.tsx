@@ -4,7 +4,7 @@ import ArticleList from "../../components/articlesList";
 
 const Index = () => {
   return (
-    <Layout menuIndex={0}>
+    <Layout menuIndex={1}>
       <ArticleList articles={[
         () => <Article fav={false} />,
         () => <Article fav={true} />,
