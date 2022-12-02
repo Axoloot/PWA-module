@@ -8,6 +8,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [pseudo, setPseudo] = useState('');
   const [password, setPassword] = useState('');
+  const [profilImg, setProfilImg] = useState('');
 
   return (
     <div className="layout-container">
@@ -47,6 +48,14 @@ const Login = () => {
             type="text"
             className="form-input"
             onChange={(e) => setEmail(e.target.value)}
+          />
+          <Text h6 color="#F2F2F2">
+            Photo de profile
+          </Text>
+          <input
+            type="text"
+            className="form-input"
+            onChange={(e) => setProfilImg(e.target.value)}
           />
           <Text h6 color="#F2F2F2">
             Password
