@@ -5,6 +5,7 @@ import '../../styles/card.css';
 import '../../styles/layout.css';
 import '../../styles/globals.css';
 import UserProvider from "../providers/userProvider";
+import PostProvider from '../providers/postsProvider';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const AnyComponent = Component as any;
@@ -19,15 +20,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta name="description" content="Description" />
         <meta name="keywords" content="Keywords" />
-        <title>ToDo - PWA</title>
+        <title>Quotidien de merde</title>
 
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#f2f2f2" />
       </Head>
-      {/* @ts-ignore */}
       <UserProvider>
-        <AnyComponent {...pageProps} />
+        <PostProvider>
+          <AnyComponent {...pageProps} />
+        </PostProvider>
       </UserProvider>
     </>
   )

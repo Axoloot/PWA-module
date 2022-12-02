@@ -8,8 +8,8 @@ const navigations = [
     route: '/trending'
   },
   {
-    name: 'Mieux Notés',
-    route: '/rating'
+    name: 'Arrive Bientôt',
+    disabled: true,
   },
 ]
 

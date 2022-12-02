@@ -10,7 +10,13 @@ const Menu = ({ centered = false, menuIndex = 0 }) => {
     <div className={`menu-container ${centered && 'menu-centered'}`}>
       {
         menuNavigations.map((nav, index) => (
-          <Text onClick={() => router.push(nav.route)} h6 size={index === menuIndex ? 30 : 25} color={index === menuIndex ? 'purple' : 'gray'} className="menu-item">
+          <Text
+            h6
+            className="menu-item"
+            onClick={() => router.push(nav.route)}
+            style={nav.disabled && { cursor: 'not-allowed' }}
+            size={index === menuIndex ? 30 : 25} color={index === menuIndex ? 'purple' : nav.disabled ? '#d0d0d0' : 'gray'}
+          >
             {nav.name}
           </Text>
         ))

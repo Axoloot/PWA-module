@@ -1,32 +1,55 @@
 
-import { MongoClient } from 'mongodb'
+import { connect, model } from 'mongoose'
+import { CLIENT_STATIC_FILES_RUNTIME_WEBPACK } from 'next/dist/shared/lib/constants';
+import PostSchema, { IPost } from './models/Post';
+import userSchema, { IUser } from './models/User';
+const MONGODB_URI = process.env.MONGODB_URI
 
-const uri = process.env.MONGODB_URI
-const options = {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
+if (!MONGODB_URI) {
+  throw new Error(
+    'Please define the MONGODB_URI environment variable inside .env.local'
+  )
 }
 
-let client
-let clientPromise
+/**
+ * Global is used here to maintain a cached connection across hot reloads
+ * in development. This prevents connections growing exponentially
+ * during API Route usage.
+ */
+let cached = global.mongoose
 
-if (!process.env.MONGODB_URI) {
-  throw new Error('Add Mongo URI to .env.local')
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null }
 }
 
-if (process.env.NODE_ENV === 'development') {
-  if (!global._mongoClientPromise) {
-    client = new MongoClient(uri, options)
-    global._mongoClientPromise = client.connect()
+async function dbConnect() {
+  if (cached.conn) {
+    return cached.conn
   }
-  clientPromise = global._mongoClientPromise
-} else {
-  client = new MongoClient(uri, options)
-  clientPromise = client.connect()
+
+  if (!cached.promise) {
+    const opts = {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      bufferCommands: false,
+      bufferMaxEntries: 0,
+      useFindAndModify: true,
+      useCreateIndex: true
+    }
+
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then(mongoose => {
+      return mongoose
+    })
+  }
+  cached.conn = await cached.promise
+  return cached.conn
 }
 
+dbConnect();
 
-const posts = client.db("posts");
-const subscriptions = client.db("subscriptions");
+const Post = model < IPost > ('Post', PostSchema);
+const User = model < IUser > ('User', userSchema);
 
-export default { db, posts, subscriptions };
+
+
+export default { Post, User };
