@@ -1,6 +1,5 @@
 
 import { connect, model } from 'mongoose'
-import { CLIENT_STATIC_FILES_RUNTIME_WEBPACK } from 'next/dist/shared/lib/constants';
 import PostSchema, { IPost } from './models/Post';
 import userSchema, { IUser } from './models/User';
 const MONGODB_URI = process.env.MONGODB_URI
@@ -31,18 +30,14 @@ async function dbConnect() {
     const opts = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      bufferCommands: false,
-      bufferMaxEntries: 0,
-      useFindAndModify: true,
-      useCreateIndex: true
     }
 
     cached.promise = connect(MONGODB_URI, opts).then(mongoose => {
       return mongoose
-    })
+    }).catch((err) => console.error(global.mongoose))
   }
   cached.conn = await cached.promise
-  return cached.conn
+  return cached.conn;
 }
 
 dbConnect();
@@ -52,4 +47,4 @@ const User = model < IUser > ('User', userSchema);
 
 
 
-export default { Post, User };
+export default { db: cached.conn, Post, User };
