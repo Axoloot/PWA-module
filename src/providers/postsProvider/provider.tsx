@@ -29,7 +29,7 @@ function PostProvider({ children }: PostProviderProps): JSX.Element {
     }
   }
 
-  async function submitPost(e) {
+  async function submitPost(e: any) {
     e.preventDefault();
 
     if (!subscription || !subscriptionData || !e.target.content.value) { return; }
@@ -161,9 +161,9 @@ function PostProvider({ children }: PostProviderProps): JSX.Element {
   useEffect(() => {
     navigator.serviceWorker.ready.then(reg => {
       reg.pushManager.getSubscription().then(sub => {
-        if (sub && !(sub.expirationTime && Date.now() > sub.expirationTime - 5 * 60 * 1000)) {
+        // if (sub && sub.expirationTime && !(sub.expirationTime && Date.now() > sub.expirationTime - 5 * 60 * 1000)) {
           setSubscription(sub);
-        }
+        // }
       });
       setRegistration(reg);
     });
