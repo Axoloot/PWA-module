@@ -12,9 +12,13 @@ const Article = ({ fav }: any) => (
         <Text h6 size={14} color="black" style={{ marginLeft: 10 }}>
           Vincent Lemesle
         </Text>
-        <div style={{ marginLeft: 'auto' }}>
+        {
+          /*
+                 <div style={{ marginLeft: 'auto' }}>
           {fav ? <AiFillStar color="#800080" size={25} /> : <AiOutlineStar color="#800080" size={25} />}
         </div>
+           */
+        }
       </div>
     </Card.Header>
     <Card.Body style={{ marginTop: 0, paddingTop: 0 }}>
