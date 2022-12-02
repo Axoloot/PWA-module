@@ -1,4 +1,4 @@
-import db from "src/lib/database";
+import { User } from "src/lib/database";
 import webpush from "web-push";
 
 webpush.setVapidDetails(
@@ -9,14 +9,17 @@ webpush.setVapidDetails(
 
 async function notifyAll(payload = { title: "", message: "" }, except = []) {
   try {
-    const subscriptions = db.subscriptions.find();
+    const user = User.find();
+    const pushTokens = user.map(({ pushTokens }) => pushTokens).flat();
+
     except = except.map((subscriber) => (subscriber?.keys?.auth));
 
-    subscriptions.forEach((subscriber) => {
-      if (!except.includes(subscriber?.keys?.auth)) {
-        webpush.sendNotification(subscriber, JSON.stringify(payload));
-      }
-    })
+
+    pushTokens.forEach((subscriber) => {
+        if (!except.includes(subscriber?.keys?.auth)) {
+          webpush.sendNotification(subscriber, JSON.stringify(payload));
+        }
+      })
   } catch (err) {
     console.error(err);
   }
@@ -26,7 +29,7 @@ async function notifyOne(payload = { title: "", message: "" }, subscriber = null
 
   try {
     webpush.sendNotification(subscriber, JSON.stringify(payload));
-  } catch(err) {
+  } catch (err) {
     console.error(err);
   }
 
