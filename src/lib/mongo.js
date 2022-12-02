@@ -25,8 +25,4 @@ if (process.env.NODE_ENV === 'development') {
   clientPromise = client.connect()
 }
 
-
-const posts = client.db("posts");
-const subscriptions = client.db("subscriptions");
-
-export default { db, posts, subscriptions };
+export default clientPromise;
