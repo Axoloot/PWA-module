@@ -1,18 +1,13 @@
-import base64ToUint8Array from '../lib/base64ToUint8Array';
-import { useEffect, useState } from "react";
+import React, { useCallback, useState, useEffect } from 'react';
+import base64ToUint8Array from '../../lib/base64ToUint8Array';
+import PostContext from './context';
 
-interface usePostsMethod {
-  subscribe: () => Promise<void>;
-  unsubscribe: () => Promise<void>
-  like: (id: string) => Promise<void>;
-  unlike: (id: string) => Promise<void>;
-  fetchPosts: () => Promise<void>;
-  submitPost: (e: any) => Promise<void>;
-  posts: any[];
+export interface PostProviderProps {
+  children: React.ReactNode;
 }
 
-const usePosts = (): usePostsMethod => {
-  const [subscription, setSubscription] = useState<PushSubscription | undefined| null>(null);
+function PostProvider({ children }: PostProviderProps): JSX.Element {
+  const [subscription, setSubscription] = useState<PushSubscription | undefined | null>(null);
   const [channel, setChannel] = useState(new BroadcastChannel("notifications"));
 
   const [subscriptionData, setSubscriptionData] = useState<null | any[]>(null);
@@ -182,15 +177,21 @@ const usePosts = (): usePostsMethod => {
     fetchSubscriptionData();
   }, [subscription]);
 
-  return {
-    subscribe,
-    unsubscribe,
-    like,
-    unlike,
-    fetchPosts,
-    submitPost,
-    posts
-  }
-};
 
-export default usePosts;
+  return (
+    <PostContext.Provider value={{
+      subscribe,
+      unsubscribe,
+      like,
+      unlike,
+      fetchPosts,
+      submitPost,
+      posts
+    }}
+    >
+      {children}
+    </PostContext.Provider>
+  );
+}
+
+export default PostProvider;
