@@ -4,6 +4,7 @@ import { AppProps } from 'next/app'
 import '../../styles/card.css';
 import '../../styles/layout.css';
 import '../../styles/globals.css';
+import UserProvider from "../providers/userProvider";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const AnyComponent = Component as any;
@@ -24,7 +25,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#f2f2f2" />
       </Head>
-      <AnyComponent {...pageProps} />
+      {/* @ts-ignore */}
+      <UserProvider>
+        <AnyComponent {...pageProps} />
+      </UserProvider>
     </>
   )
 }

@@ -1,13 +1,24 @@
-import { useState } from "react";
+import {useRouter} from "next/router";
+import { useEffect, useState } from "react";
 import { Container } from '@nextui-org/react';
 
 import Menu from "./Menu";
 import Header from "./header";
 import useWindowSize from "../useWindowSize";
+import { useUserContext } from "../../providers/userProvider";
 
-const Layout = ({ children }: any) => {
+const Layout = ({ children, menuIndex }: any) => {
+  const router = useRouter();
+
+  const { user } = useUserContext();
   const { width } = useWindowSize();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!user) {
+      router.push('/');
+    }
+  }, [user]);
 
   return (
     <div className="layout-container">
@@ -21,7 +32,7 @@ const Layout = ({ children }: any) => {
           <Container>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <div style={{ width: '20%' }}>
-                <Menu />
+                <Menu menuIndex={menuIndex} />
               </div>
               <div className="layout-children">
                 {children}
