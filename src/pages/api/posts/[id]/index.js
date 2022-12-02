@@ -1,4 +1,4 @@
-import db from "lib/database";
+import { Post } from "lib/database";
 
 export default function handler(req, res) {
   try {
@@ -9,8 +9,8 @@ export default function handler(req, res) {
 
     switch (req.method) {
       case ("GET"):
-        const post = db.posts.get(id);
-        
+        const post = Post.get(id);
+
         if (!post) {
           return (res.status(404).json({ error: "Not found" }));
         }

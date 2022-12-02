@@ -1,28 +1,28 @@
-import db from "src/lib/database";
+import { Post, Subscriptions } from "src/lib/database";
 import notify from "src/lib/notify";
 
 export default function handler(req, res) {
   try {
     switch (req.method) {
       case ("GET"):
-        const posts = db.posts.find();
+        const posts = Post.find();
 
         return (res.status(200).json(posts));
-      
+
       case ("POST"):
         if (!req.body?.subscriber?.keys?.auth) {
           return (res.status(400).json({ error: "Bad Request" }));
         }
 
-        const subscriber = db.subscriptions.findOne({ "keys.auth": req.body.subscriber.keys.auth });
+        const subscriber = Subscriptions.findOne({ "keys.auth": req.body.subscriber.keys.auth });
 
         if (!subscriber) {
           return (res.status(404).json({ error: "Subscriber Not Found" }));
         }
 
-        const post = db.posts.insert({ subscriber: subscriber, content: req.body?.content, likes: [] });
+        const post = Posts.insert({ subscriber: subscriber, content: req.body?.content, likes: [] });
 
-        notify.notifyAll({ title: "New post from " + subscriber?.keys?.p256dh?.slice(0, 8), message: post.content }, [ subscriber ]);
+        notify.notifyAll({ title: "New post from " + subscriber?.keys?.p256dh?.slice(0, 8), message: post.content }, [subscriber]);
 
         return (res.status(201).json(post));
 

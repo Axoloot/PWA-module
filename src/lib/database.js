@@ -1,6 +1,7 @@
 
-import mongoose from 'mongoose'
-
+import { connect } from 'mongoose'
+import PostSchema from './models/Post';
+import userSchema from './models/User';
 const MONGODB_URI = process.env.MONGODB_URI
 
 if (!MONGODB_URI) {
@@ -20,7 +21,6 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null }
 }
 
-async function dbConnect() {
   if (cached.conn) {
     return cached.conn
   }
@@ -35,15 +35,15 @@ async function dbConnect() {
       useCreateIndex: true
     }
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then(mongoose => {
+    cached.promise = connect(MONGODB_URI, opts).then(mongoose => {
       return mongoose
     })
   }
+
+  const Post = model<IPost>('Post', PostSchema);
+  const User = model<IUser>('User', userSchema);
+
   cached.conn = await cached.promise
-  return cached.conn;
-};
 
-const posts = dbConnect().db("posts");
-const subscriptions = dbConnect().db("subscriptions");
 
-export default { db: dbConnect, posts, subscriptions };
+export default { db: cached.conn, Post, User };
