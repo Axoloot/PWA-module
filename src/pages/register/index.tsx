@@ -3,12 +3,14 @@ import Image from "next/image";
 import { useState } from "react";
 import logoSvg from "/public/logo.svg";
 import { Text } from '@nextui-org/react';
+import { useUserContext } from "../../providers/userProvider";
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [pseudo, setPseudo] = useState('');
   const [password, setPassword] = useState('');
   const [profilImg, setProfilImg] = useState('');
+  const { signup } = useUserContext();
 
   return (
     <div className="layout-container">
@@ -65,7 +67,9 @@ const Login = () => {
             className="form-input"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button style={{ backgroundColor: '#F2F2F2', borderRadius: 15, width: 150, height: 50, cursor: 'pointer', marginTop: 60 }}>
+          <button
+            onClick={() => signup({email, password, pseudo, profilImg})}
+            style={{ backgroundColor: '#F2F2F2', borderRadius: 15, width: 150, height: 50, cursor: 'pointer', marginTop: 60 }}>
             <Text h4 color="#2d002d" style={{ padding: 0, margin: 0 }}>
               CREER
             </Text>

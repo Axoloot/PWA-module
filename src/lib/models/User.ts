@@ -1,7 +1,6 @@
-import mongoose, { Schema, model } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 
 export interface IUser {
-  id: string;
   pseudo: string;
   email: string;
   password: string;
@@ -9,8 +8,7 @@ export interface IUser {
   profileImg?: string;
 }
 
-const userSchema = new mongoose.Schema<IUser>({
-  id: { type: String, required: true },
+const userSchema = new Schema<IUser>({
   pseudo: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
@@ -18,6 +16,4 @@ const userSchema = new mongoose.Schema<IUser>({
   profileImg: String,
 });
 
-const Usermodel =  mongoose.models.User || model('User', userSchema);
-
-export default Usermodel;
+export default models.User || model('User', userSchema);;

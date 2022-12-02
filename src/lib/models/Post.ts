@@ -1,7 +1,6 @@
-import mongoose, { model } from "mongoose";
+import { model, models, Schema } from "mongoose";
 
 interface IPost {
-  id: string;
   title: string;
   content: string;
   likes: number;
@@ -12,8 +11,7 @@ interface IPost {
   }
 }
 
-const PostSchema = new mongoose.Schema<IPost>({
-  id: { type: String, required: true },
+const PostSchema = new Schema<IPost>({
   title: { type: String, required: true },
   content: { type: String, required: true },
   likes: { type: Number, default: 0 },
@@ -22,4 +20,4 @@ const PostSchema = new mongoose.Schema<IPost>({
 });
 
 
-export default mongoose.models.Post || model("Post", PostSchema);
+export default models.Post || model("Post", PostSchema);
