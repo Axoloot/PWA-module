@@ -7,7 +7,7 @@ import logoSvg from '/public/logo.svg';
 const Header = ({ width, isMenuOpen, setIsMenuOpen }: any) => {
   return (
     <div className="layout-header">
-      <Image src={logoSvg} width={50} height={50} />
+      <Image alt="logo" src={logoSvg} width={50} height={50} />
       <div className="header-avatar">
         <Avatar
           squared

@@ -2,8 +2,8 @@ import Head from 'next/head'
 import { AppProps } from 'next/app'
 
 import '../../styles/card.css';
-import '../../styles/globals.css'
 import '../../styles/layout.css';
+import '../../styles/globals.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const AnyComponent = Component as any;

@@ -1,8 +1,8 @@
-import Layout from "../components/layout";
-import Article from "../components/article";
-import ArticleList from "../components/articlesList";
+import Layout from "../../components/layout";
+import Article from "../../components/article";
+import ArticleList from "../../components/articlesList";
 
-const Home = () => (
+const Index = () => (
   <Layout>
     <ArticleList articles={[
       () => <Article fav={false} />,
@@ -17,4 +17,4 @@ const Home = () => (
   </Layout>
 );
 
-export default Home;
+export default Index;
