@@ -1,4 +1,4 @@
-import db from "lib/database";
+import db from "src/lib/database";
 import webpush from "web-push";
 
 webpush.setVapidDetails(

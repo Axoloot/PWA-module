@@ -1,5 +1,5 @@
-import db from "lib/database";
-import notify from "lib/notify";
+import db from "src/lib/database";
+import notify from "src/lib/notify";
 
 export default function handler(req, res) {
   try {
