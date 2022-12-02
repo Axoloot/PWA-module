@@ -3,13 +3,12 @@ import Image from "next/image";
 import { useState } from "react";
 import logoSvg from "/public/logo.svg";
 import { Text } from '@nextui-org/react';
-import { useRouter } from 'next/router';
 
 const Login = () => {
-  const router = useRouter()
-
   const [email, setEmail] = useState('');
+  const [pseudo, setPseudo] = useState('');
   const [password, setPassword] = useState('');
+  const [profilImg, setProfilImg] = useState('');
 
   return (
     <div className="layout-container">
@@ -21,11 +20,11 @@ const Login = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        <Image alt="logo" src={logoSvg} width={150} height={150} style={{ marginTop: '-7%' }} />
+        <Image alt="logo" src={logoSvg} width={150} height={150} />
         <div
           style={{
             width: '30%',
-            height: '50%',
+            height: '60%',
             display: 'flex',
             marginTop: '5%',
             borderRadius: 15,
@@ -35,12 +34,28 @@ const Login = () => {
             backgroundColor: '#2d002d',
           }}>
           <Text h6 color="#F2F2F2">
+            Pseudo
+          </Text>
+          <input
+            type="text"
+            className="form-input"
+            onChange={(e) => setPseudo(e.target.value)}
+          />
+          <Text h6 color="#F2F2F2">
             Email
           </Text>
           <input
             type="text"
             className="form-input"
             onChange={(e) => setEmail(e.target.value)}
+          />
+          <Text h6 color="#F2F2F2">
+            Photo de profile
+          </Text>
+          <input
+            type="text"
+            className="form-input"
+            onChange={(e) => setProfilImg(e.target.value)}
           />
           <Text h6 color="#F2F2F2">
             Password
@@ -50,17 +65,14 @@ const Login = () => {
             className="form-input"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button
-            onClick={() => router.push('/home')}
-            style={{ backgroundColor: '#F2F2F2', borderRadius: 15, width: 150, height: 50, cursor: 'pointer', marginTop: 60 }}
-          >
+          <button style={{ backgroundColor: '#F2F2F2', borderRadius: 15, width: 150, height: 50, cursor: 'pointer', marginTop: 60 }}>
             <Text h4 color="#2d002d">
-              LOGIN
+              CREER
             </Text>
           </button>
-          <Link href="/register">
+          <Link href="/">
             <Text h6 color="#F2F2F2" style={{ textDecoration: 'underline', marginTop: 30 }}>
-              créer un compte
+              se connecter
             </Text>
           </Link>
         </div>

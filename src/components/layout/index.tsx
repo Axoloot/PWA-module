@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { Container } from '@nextui-org/react';
 
 import Menu from "./Menu";
 import Header from "./header";
 import useWindowSize from "../useWindowSize";
-import {useState} from "react";
 
 const Layout = ({ children }: any) => {
   const { width } = useWindowSize();

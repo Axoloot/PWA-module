@@ -1,18 +1,13 @@
-import base64ToUint8Array from '../lib/base64ToUint8Array';
-import { useEffect, useState } from "react";
+import React, { useCallback, useState, useEffect } from 'react';
+import base64ToUint8Array from '../../lib/base64ToUint8Array';
+import PostContext from './context';
 
-interface usePostsMethod {
-  subscribe: () => Promise<void>;
-  unsubscribe: () => Promise<void>
-  like: (id: string) => Promise<void>;
-  unlike: (id: string) => Promise<void>;
-  fetchPosts: () => Promise<void>;
-  submitPost: (e: any) => Promise<void>;
-  posts: any[];
+export interface PostProviderProps {
+  children: React.ReactNode;
 }
 
-const usePosts = (): usePostsMethod => {
-  const [subscription, setSubscription] = useState<PushSubscription | undefined| null>(null);
+function PostProvider({ children }: PostProviderProps): JSX.Element {
+  const [subscription, setSubscription] = useState<PushSubscription | undefined | null>(null);
   const [channel, setChannel] = useState(new BroadcastChannel("notifications"));
 
   const [subscriptionData, setSubscriptionData] = useState<null | any[]>(null);
@@ -34,7 +29,7 @@ const usePosts = (): usePostsMethod => {
     }
   }
 
-  async function submitPost(e) {
+  async function submitPost(e: any) {
     e.preventDefault();
 
     if (!subscription || !subscriptionData || !e.target.content.value) { return; }
@@ -166,9 +161,9 @@ const usePosts = (): usePostsMethod => {
   useEffect(() => {
     navigator.serviceWorker.ready.then(reg => {
       reg.pushManager.getSubscription().then(sub => {
-        if (sub && !(sub.expirationTime && Date.now() > sub.expirationTime - 5 * 60 * 1000)) {
+        // if (sub && sub.expirationTime && !(sub.expirationTime && Date.now() > sub.expirationTime - 5 * 60 * 1000)) {
           setSubscription(sub);
-        }
+        // }
       });
       setRegistration(reg);
     });
@@ -182,15 +177,21 @@ const usePosts = (): usePostsMethod => {
     fetchSubscriptionData();
   }, [subscription]);
 
-  return {
-    subscribe,
-    unsubscribe,
-    like,
-    unlike,
-    fetchPosts,
-    submitPost,
-    posts
-  }
-};
 
-export default usePosts;
+  return (
+    <PostContext.Provider value={{
+      subscribe,
+      unsubscribe,
+      like,
+      unlike,
+      fetchPosts,
+      submitPost,
+      posts
+    }}
+    >
+      {children}
+    </PostContext.Provider>
+  );
+}
+
+export default PostProvider;
