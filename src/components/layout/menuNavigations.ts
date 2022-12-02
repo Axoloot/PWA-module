@@ -7,6 +7,10 @@ const navigations = [
     name: 'Tendance',
     route: '/trending'
   },
+  {
+    name: 'Arrive Bientôt',
+    disabled: true,
+  },
 ]
 
 export default navigations;
