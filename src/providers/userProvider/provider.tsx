@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import UserContext from './context';
-
+import { signIn, getSession } from "next-auth/react";
 export interface UserProviderProps {
   children: React.ReactNode;
 }
@@ -14,23 +14,35 @@ function UserProvider({ children }: UserProviderProps): JSX.Element {
 
   const signup = useCallback(
     async (email: string, password: string, pseudo: string): Promise<boolean> => {
-      setUser({
-        email,
-        pseudo,
-      });
       return true;
     },
     []);
 
-  const login = useCallback(async (): Promise<boolean> => {
-    setUser({
-      email: 'cyril@hotmail.fr',
-      pseudo: 'axoloot',
-    });
-    return true;
+  const login = useCallback(async (email: string, password: string, redirect = true, callback = "/home"): Promise<boolean> => {
+    const signin = await signIn("credentials", { email, password, redirect, callback });
+    if (signin?.ok) {
+      const session = await getSession();
+
+      if (session?.user) {
+        const newUser = session.user as unknown as User;
+        setUser(newUser);
+      }
+      return true;
+    }
+    return false;
   }, []);
 
   useEffect(() => {
+    const loadSession = async () => {
+      const session = await getSession();
+
+      if (session?.user) {
+        const newUser = session.user as unknown as User;
+        console.log(newUser);
+        setUser(newUser);
+      }
+    }
+    loadSession();
   }, []);
 
 

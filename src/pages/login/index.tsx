@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logoSvg from "/public/logo.svg";
 import { Text } from '@nextui-org/react';
 import { useRouter } from 'next/router';
@@ -8,9 +8,15 @@ import {useUserContext} from "../../providers/userProvider";
 
 const Login = () => {
   const router = useRouter()
-  const { login } = useUserContext();
+  const { user, login } = useUserContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      router.push("/home");
+    }
+  }, [ user ])
 
   return (
     <div className="layout-container">
@@ -53,8 +59,7 @@ const Login = () => {
           />
           <button
             onClick={async () => {
-              await login();
-              router.push('/home');
+              await login(email, password);
             }}
             style={{ backgroundColor: '#F2F2F2', borderRadius: 15, width: 150, height: 50, cursor: 'pointer', marginTop: 60 }}
           >
