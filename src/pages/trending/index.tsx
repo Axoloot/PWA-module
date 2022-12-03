@@ -8,7 +8,7 @@ const Index = () => {
   const newPost = [...posts];
 
   return (
-    <Layout menuIndex={0}>
+    <Layout menuIndex={1}>
       <ArticleList posts={newPost.sort((a, b) => {
         const aLikes = a.likes || 0;
         const bLikes = b.likes || 0;
