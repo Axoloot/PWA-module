@@ -49,13 +49,13 @@ const Article = ({ fav, post }: { fav: boolean, post: IPost }) => {
       <Card.Footer>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: "100%" }}>
           <Button style={{ backgroundColor: "rgba(236,236,236,0.5)", marginBottom: 10 }}
-            onClick={() => like(_id)}>
+            onClick={() => _id && like(_id)}>
             <Text h6 size={13} color="black">
               Valider cette VDM
             </Text>
           </Button>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <HeartIcon fill="red" filled size={20} height={20} width={20} label={likes} />
+            <HeartIcon fill="red" filled size={20} height={20} width={20} label={likes || 0} />
             {likes}
           </div>
         </div>

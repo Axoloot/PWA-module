@@ -9,7 +9,11 @@ const Index = () => {
 
   return (
     <Layout menuIndex={0}>
-      <ArticleList posts={newPost.sort((a, b) => a.likes || 0 - b.likes || 0)} />
+      <ArticleList posts={newPost.sort((a, b) => {
+        const aLikes = a.likes || 0;
+        const bLikes = b.likes || 0;
+        return aLikes - bLikes;
+      })} />
     </Layout>
   )
 }

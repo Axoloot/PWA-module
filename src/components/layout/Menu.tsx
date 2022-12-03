@@ -31,7 +31,7 @@ const Menu = ({ centered = false, menuIndex = 0 }) => {
             onClick={() => {
               if (nav.route) router.push(nav.route)
             }}
-            style={nav.disabled && { cursor: 'not-allowed' }}
+            style={{ cursor: nav.disabled ? 'not-allowed' : '' }}
             size={nav.route === window.location.pathname ? 30 : 25} color={nav.route === window.location.pathname ? 'purple' : nav.disabled ? '#d0d0d0' : 'gray'}
           >
             {nav.name}

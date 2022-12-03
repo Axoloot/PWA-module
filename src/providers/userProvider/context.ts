@@ -7,7 +7,7 @@ declare global {
     email: string;
     password: string;
     pseudo: string;
-    profilUrl?: string;
+    profilImg?: string;
   }
 
   type UserCtxValue = {
