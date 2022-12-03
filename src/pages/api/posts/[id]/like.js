@@ -1,20 +1,26 @@
+import "src/lib/database";
 import mongoose from "mongoose";
 import Post from "../../../../lib/models/Post";
+import User from "../../../../lib/models/User";
+import { authOptions } from "src/pages/api/auth/[...nextauth]";
+import { unstable_getServerSession } from "next-auth/next";
 import notify from "../../../../lib/notify";
 
 export default async function handler(req, res) {
   try {
+    let user = null;
+    const session = await unstable_getServerSession(req, res, authOptions);
+
+    if (!session || !(user = await User.findOne({ email: session.user?.email }).exec())) {
+      return (res.status(401).json({ message: "You must be logged in." }));
+    }
+
     let { id } = req.query;
-    const post = await Post.findOne({ id });
+    const post = await Post.findById(id);
 
     if (!post) {
       return (res.status(404).json({ error: "Not found" }));
     }
-    // let subscription = Subscriptions.findOne({ "keys.auth": req.body.keys.auth });
-
-    // if (!subscription) {
-    //   subscription = Subscriptions.insert(req.body);
-    // }
 
     switch (req.method) {
 
@@ -23,8 +29,16 @@ export default async function handler(req, res) {
           { _id: new mongoose.Types.ObjectId(id) },
           { $inc: { likes: 1 } }
         );
+
         post.likes += 1;
-        // notify.notifyOne({ title: "New Like By #" + subscription?.keys?.p256dh?.slice(0, 8) + " !", message: post.content }, post.subscriber);
+
+        if (post.userId) {
+          const author = await User.findById(post.userId);
+          
+          if (post.author) {
+            notify.notifyOne({ title: "New Like By " + user.pseudo + " !", message: post.content }, author);
+          }
+        }
 
         return (res.status(201).json(post));
 

@@ -9,15 +9,15 @@ webpush.setVapidDetails(
 
 async function notifyAll(payload = { title: "", message: "" }, except = []) {
   try {
-    const user = User.find();
-    const pushTokens = user.map(({ pushTokens }) => pushTokens).flat();
+    const users = await User.find();
+    const pushTokens = users.map(({ pushTokens }) => pushTokens).flat();
 
-    except = except.map((subscriber) => (subscriber?.keys?.auth));
+    except = except.map((pushToken) => (pushToken?.keys?.auth));
 
 
-    pushTokens.forEach((subscriber) => {
-        if (!except.includes(subscriber?.keys?.auth)) {
-          webpush.sendNotification(subscriber, JSON.stringify(payload));
+    pushTokens.forEach((pushToken) => {
+        if (!except.includes(pushToken?.keys?.auth)) {
+          webpush.sendNotification(pushToken, JSON.stringify(payload));
         }
       })
   } catch (err) {
@@ -25,10 +25,14 @@ async function notifyAll(payload = { title: "", message: "" }, except = []) {
   }
 }
 
-async function notifyOne(payload = { title: "", message: "" }, subscriber = null) {
+async function notifyOne(payload = { title: "", message: "" }, user = null) {
 
   try {
-    webpush.sendNotification(subscriber, JSON.stringify(payload));
+    if (!user) { return; }
+
+    user.pushTokens.forEach((token) => {
+      webpush.sendNotification(token, JSON.stringify(payload));
+    });
   } catch (err) {
     console.error(err);
   }
