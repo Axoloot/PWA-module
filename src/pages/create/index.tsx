@@ -67,7 +67,15 @@ const Index = () => {
         )}
         <button
           onClick={() =>
-            submitPost({ title, content: desc, author: user?.pseudo ?? 'Anonyme', geolocation: pos, userId: user?._id })}
+            submitPost({
+              title,
+              content: desc,
+              author: user?.pseudo ?? 'Anonyme',
+              geolocation: pos,
+              userId: user?._id,
+              authorImg: user?.profilImg || 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
+            })
+        }
           style={{ backgroundColor: '#380038', cursor: 'pointer', width: 150, height: 40, borderRadius: 5, marginTop: pos ? 60 : 5 }}
         >
           <Text h4 color="#F2F2F2" style={{ padding: 0, margin: 0 }}>

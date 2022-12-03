@@ -13,6 +13,7 @@ const Article = ({ fav, post }: { fav: boolean, post: IPost }) => {
     content,
     likes,
     author,
+    authorImg,
     geolocation
   } = post;
 
@@ -23,7 +24,7 @@ const Article = ({ fav, post }: { fav: boolean, post: IPost }) => {
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
             <Avatar
               squared
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+              src={authorImg || "https://i.pravatar.cc/150?u=a042581f4e29026704d"}
             />
             <div style={{ flex: 2 }}>
               <Text h6 size={14} color="black" style={{ marginLeft: 10 }}>
