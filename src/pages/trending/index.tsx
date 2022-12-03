@@ -5,11 +5,11 @@ import { usePostContext } from "../../providers/postsProvider";
 
 const Index = () => {
   const { posts } = usePostContext();
-  const newPost = [ ...posts ];
+  const newPost = [...posts];
 
   return (
     <Layout menuIndex={0}>
-      <ArticleList posts={newPost.sort((a, b) => 0.5 - Math.random())} />
+      <ArticleList posts={newPost.sort((a, b) => a.likes || 0 - b.likes || 0)} />
     </Layout>
   )
 }
