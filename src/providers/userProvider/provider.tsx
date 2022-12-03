@@ -80,16 +80,19 @@ function UserProvider({ children }: UserProviderProps): JSX.Element {
   }, []);
 
   useEffect(() => {
-    navigator.serviceWorker.ready.then(reg => {
-      reg.pushManager.getSubscription().then(sub => {
-        if (sub && !(sub.expirationTime && Date.now() > sub.expirationTime - 5 * 60 * 1000)) {
-          
-        }
-        else {
-          subscribe(reg);
-        }
+    console.log("USER EFFECT", user);
+    if (user) {
+      navigator.serviceWorker.ready.then(reg => {
+        reg.pushManager.getSubscription().then(sub => {
+          if (sub && !(sub.expirationTime && Date.now() > sub.expirationTime - 5 * 60 * 1000)) {
+            
+          }
+          else {
+            subscribe(reg);
+          }
+        });
       });
-    });
+    }
   }, [ user ])
 
 

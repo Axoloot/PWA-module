@@ -1,4 +1,7 @@
-import { Subscriptions } from "src/lib/database";
+import "src/lib/database";
+import User from "src/lib/models/User";
+import { authOptions } from "src/pages/api/auth/[...nextauth]";
+import { unstable_getServerSession } from "next-auth/next";
 import Post from "../../../lib/models/Post";
 
 import notify from "src/lib/notify";
@@ -12,18 +15,15 @@ export default async function handler(req, res) {
         return (res.status(200).json(posts));
 
       case ("POST"):
-        // if (!req.body?.subscriber?.keys?.auth) {
-        //   return (res.status(400).json({ error: "Bad Request" }));
-        // }
+        let user = null;
+        const session = await unstable_getServerSession(req, res, authOptions);
 
-        // const subscriber = Subscriptions.findOne({ "keys.auth": req.body.subscriber.keys.auth });
-
-        // if (!subscriber) {
-        //   return (res.status(404).json({ error: "Subscriber Not Found" }));
-        // }
+        if (!session || !(user = await User.findOne({ email: session.user?.email }).exec())) {
+          return (res.status(401).json({ message: "You must be logged in." }));
+        }
 
         const post = await Post(req.body).save();
-        // notify.notifyAll({ title: "New post from " + subscriber?.keys?.p256dh?.slice(0, 8), message: post.content }, [subscriber]);
+        notify.notifyAll({ title: "New post from " + user.pseudo, message: post.content }, [ user.pushTokens ]);
 
         return (res.status(201).json(post));
 
