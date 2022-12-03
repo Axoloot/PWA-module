@@ -5,7 +5,6 @@ import Layout from "../../components/layout";
 import { usePostContext } from "../../providers/postsProvider";
 import { useUserContext } from "../../providers/userProvider";
 
-import GoogleMapReact from 'google-map-react';
 import Image from "next/image";
 
 interface Coords {
@@ -56,24 +55,7 @@ const Index = () => {
           />
         </div>
 
-        {pos &&
-          <div style={{ height: '5em', width: '5em' }}>
-            <GoogleMapReact
-              bootstrapURLKeys={{ key: "" }}
-              defaultCenter={pos}
-              defaultZoom={11}
-
-            >
-              <Image
-                loader={() => "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/352px-Map_pin_icon.svg.png"}
-                src='map'
-                width={10}
-                height={10}
-                alt='oi'
-              />
-            </GoogleMapReact>
-          </div >
-        }
+        {pos && JSON.stringify(pos)}
         {!pos && (
           <Text h6 color="#480048" style={{ marginTop: 60 }}>
             {
