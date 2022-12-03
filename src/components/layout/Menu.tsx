@@ -1,7 +1,21 @@
 import { useRouter } from "next/router";
 import { Text } from '@nextui-org/react';
 
-import menuNavigations from "./menuNavigations";
+
+const navigations = [
+  {
+    name: 'Dernières',
+    route: '/home'
+  },
+  {
+    name: 'Tendance',
+    route: '/trending'
+  },
+  {
+    name: 'Arrive Bientôt',
+    disabled: true,
+  },
+]
 
 const Menu = ({ centered = false, menuIndex = 0 }) => {
   const router = useRouter();
@@ -10,14 +24,14 @@ const Menu = ({ centered = false, menuIndex = 0 }) => {
   return (
     <div className={`menu-container ${centered && 'menu-centered'}`}>
       {
-        menuNavigations.map((nav, index) => (
+        navigations.map((nav, index) => (
           <Text
             h6
             className="menu-item"
             onClick={() => {
               if (nav.route) router.push(nav.route)
             }}
-            style={nav.disabled && { cursor: 'not-allowed' }}
+            style={{ cursor: nav.disabled ? 'not-allowed' : '' }}
             size={nav.route === window.location.pathname ? 30 : 25} color={nav.route === window.location.pathname ? 'purple' : nav.disabled ? '#d0d0d0' : 'gray'}
           >
             {nav.name}

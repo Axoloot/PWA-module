@@ -2,12 +2,13 @@ import React, { useCallback, useState, useEffect } from 'react';
 import UserContext from './context';
 import { signIn, getSession, signOut } from "next-auth/react";
 import base64ToUint8Array from "../../lib/base64ToUint8Array";
+import { IUser } from '../../lib/models/User';
 export interface UserProviderProps {
   children: React.ReactNode;
 }
 
 function UserProvider({ children }: UserProviderProps): JSX.Element {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<IUser | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const logout = useCallback((): void => {
@@ -34,7 +35,7 @@ function UserProvider({ children }: UserProviderProps): JSX.Element {
       const session = await getSession();
 
       if (session?.user) {
-        const newUser = session.user as unknown as User;
+        const newUser = session.user as unknown as IUser;
         setUser(newUser);
       }
       return true;

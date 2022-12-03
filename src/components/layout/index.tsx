@@ -20,6 +20,7 @@ const Layout = ({ children, menuIndex }: any) => {
     }
   }, [user]);
 
+  console.log(width)
   return (
     <div className="layout-container">
       <div className="layout-header-container">
@@ -28,7 +29,7 @@ const Layout = ({ children, menuIndex }: any) => {
         </Container>
       </div>
       {
-        width > 960 ? (
+        width > 960 || width === 0 ? (
           <Container>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <div style={{ width: '20%' }}>
