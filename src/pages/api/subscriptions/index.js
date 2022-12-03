@@ -1,27 +1,42 @@
-import db from "lib/database";
+import "src/lib/database";
+import User from "src/lib/models/User";
+import { authOptions } from "src/pages/api/auth/[...nextauth]";
+import { unstable_getServerSession } from "next-auth/next";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   try {
+    let user = null;
+    const session = await unstable_getServerSession(req, res, authOptions);
+
+    if (!session || !(user = await User.findOne({ email: session.user?.email }).exec())) {
+      return (res.status(401).json({ message: "You must be logged in." }));
+    }
     if (!req.body?.endpoint || !req.body?.keys?.auth || !req.body?.keys?.p256dh) {
       return (res.status(400).json({ error: "Bad Request" }));
     }
 
-    const subscription = db.subscriptions.findOne({ "keys.auth": req.body.keys.auth });
+    const pushToken = user.pushTokens.findIndex((token) => (
+      token.endpoint === req.body.endpoint
+      && token.keys.auth === req.body.keys.auth
+      && token.keys.p256dh === req.body.keys.p256dh
+    ));
 
     switch (req.method) {
       case ("POST"):
-        if (!subscription) {
-          const newSubscription = db.subscriptions.insert(req.body);
+        if (pushToken < 0) {
+          user.pushTokens.push(req.body);
+          user.save();
 
-          return (res.status(200).json(newSubscription));
+          return (res.status(200).json(user));
         }
-        return (res.status(200).json(subscription));
+        return (res.status(200).json(user));
 
       case ("DELETE"):
-        if (!subscription) {
+        if (pushToken < 0) {
           return (res.status(404).json({ error: "Not found" }));
         }
-        db.subscriptions.remove(subscription);
+        user.pushTokens.splide(pushToken, 1);
+        user.save();
 
         return (res.status(200).json({ success: "true" }));
 

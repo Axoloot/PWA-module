@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import User from "../../../lib/models/User";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export default NextAuth({
+export const authOptions = {
   session: {
     strategy: "jwt",
   },
@@ -27,4 +27,6 @@ export default NextAuth({
       }
     })
   ]
-});
+};
+
+export default NextAuth(authOptions);
