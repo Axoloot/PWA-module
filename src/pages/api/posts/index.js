@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   try {
     switch (req.method) {
       case ("GET"):
-        const posts = await Post.find({});
+        const posts = await Post.find({}, null, { sort: { createdAt: -1 } });
 
         return (res.status(200).json(posts));
 
@@ -21,7 +21,6 @@ export default async function handler(req, res) {
         // if (!subscriber) {
         //   return (res.status(404).json({ error: "Subscriber Not Found" }));
         // }
-
         const post = await Post(req.body).save();
         // notify.notifyAll({ title: "New post from " + subscriber?.keys?.p256dh?.slice(0, 8), message: post.content }, [subscriber]);
 

@@ -1,5 +1,4 @@
-import { model, models, Schema } from "mongoose";
-import QDM from '../../QDM.json';
+import { model, models, Schema, Types } from "mongoose";
 export interface IPost {
   _id?: string;
   title: string;
@@ -12,6 +11,7 @@ export interface IPost {
   }
   createdAt?: Date;
   modifiedAt?: Date;
+  userId?: string;
 }
 
 const PostSchema = new Schema<IPost>({
@@ -19,6 +19,7 @@ const PostSchema = new Schema<IPost>({
   content: { type: String, required: true },
   likes: { type: Number, default: 0 },
   author: { type: String, required: true },
+  userId: { type: String, required: true },
   geolocation: Object,
 }, { timestamps: true });
 
