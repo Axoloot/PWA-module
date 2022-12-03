@@ -17,6 +17,7 @@ const Index = () => {
   const [loading, setLoading] = useState(true);
   const { submitPost } = usePostContext();
   const { user } = useUserContext();
+
   useEffect(() => {
     if (!pos) {
       navigator.geolocation.getCurrentPosition(
@@ -62,7 +63,7 @@ const Index = () => {
         )}
         <button
           onClick={() =>
-            submitPost({ title, content: desc, author: user?.pseudo ?? 'Anonyme', geolocation: pos })}
+            submitPost({ title, content: desc, author: user?.pseudo ?? 'Anonyme', geolocation: pos, userId: user?._id })}
           style={{ backgroundColor: '#380038', cursor: 'pointer', width: 150, height: 40, borderRadius: 5, marginTop: pos ? 60 : 5 }}
         >
           <Text h4 color="#F2F2F2" style={{ padding: 0, margin: 0 }}>

@@ -31,7 +31,6 @@ function PostProvider({ children }: PostProviderProps): JSX.Element {
   }
 
   async function submitPost(post: IPost) {
-
     try {
       const res = await fetch("/api/posts", {
         method: "POST",

@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   try {
     switch (req.method) {
       case ("GET"):
-        const posts = await Post.find({});
+        const posts = await Post.find({}, null, { sort: { createdAt: -1 } });
 
         return (res.status(200).json(posts));
 

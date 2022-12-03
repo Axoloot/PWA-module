@@ -6,6 +6,7 @@ import menuNavigations from "./menuNavigations";
 const Menu = ({ centered = false, menuIndex = 0 }) => {
   const router = useRouter();
 
+  window.location.pathname
   return (
     <div className={`menu-container ${centered && 'menu-centered'}`}>
       {
@@ -13,9 +14,11 @@ const Menu = ({ centered = false, menuIndex = 0 }) => {
           <Text
             h6
             className="menu-item"
-            onClick={() => router.push(nav.route)}
+            onClick={() => {
+              if (nav.route) router.push(nav.route)
+            }}
             style={nav.disabled && { cursor: 'not-allowed' }}
-            size={index === menuIndex ? 30 : 25} color={index === menuIndex ? 'purple' : nav.disabled ? '#d0d0d0' : 'gray'}
+            size={nav.route === window.location.pathname ? 30 : 25} color={nav.route === window.location.pathname ? 'purple' : nav.disabled ? '#d0d0d0' : 'gray'}
           >
             {nav.name}
           </Text>

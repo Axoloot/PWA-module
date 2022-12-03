@@ -14,17 +14,13 @@ export default async function handler(req, res) {
     if (!session || !(user = await User.findOne({ email: session.user?.email }).exec())) {
       return (res.status(401).json({ message: "You must be logged in." }));
     }
+
     let { id } = req.query;
-    const post = await Post.findOne({ id });
+    const post = await Post.findById(id);
 
     if (!post) {
       return (res.status(404).json({ error: "Not found" }));
     }
-    // let subscription = Subscriptions.findOne({ "keys.auth": req.body.keys.auth });
-
-    // if (!subscription) {
-    //   subscription = Subscriptions.insert(req.body);
-    // }
 
     switch (req.method) {
 
@@ -36,11 +32,12 @@ export default async function handler(req, res) {
 
         post.likes += 1;
 
-        console.log(post);
-        const author = await User.findOne({ $or: [{ pseudo: post.author }, { _id: post.createdBy }] });
-        
-        if (author) {
-          notify.notifyOne({ title: "New Like By " + user.pseudo + " !", message: post.content }, author);
+        if (post.userId) {
+          const author = await User.findById(post.userId);
+          
+          if (post.author) {
+            notify.notifyOne({ title: "New Like By " + user.pseudo + " !", message: post.content }, author);
+          }
         }
 
         return (res.status(201).json(post));
