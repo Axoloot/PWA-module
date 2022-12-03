@@ -12,11 +12,11 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    if (user) {
-     router.push("/home");
-    }
-  }, [ user ])
+  // useEffect(() => {
+  //   if (user) {
+  //    router.push("/home");
+  //   }
+  // }, [ user ])
 
   return (
     <div className="layout-container">

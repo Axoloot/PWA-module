@@ -14,11 +14,11 @@ const Layout = ({ children, menuIndex }: any) => {
   const { width } = useWindowSize();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(() => {
-    if (!user) {
-      router.push('/');
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     router.push('/');
+  //   }
+  // }, [user]);
 
   console.log(width)
   return (
