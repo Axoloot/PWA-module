@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import UserContext from './context';
 import { signIn, getSession, signOut } from "next-auth/react";
+import base64ToUint8Array from "../../lib/base64ToUint8Array";
 export interface UserProviderProps {
   children: React.ReactNode;
 }
@@ -41,17 +42,55 @@ function UserProvider({ children }: UserProviderProps): JSX.Element {
     return false;
   }, []);
 
+  const subscribe = async (reg: any) => {
+    try {
+      const sub = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: base64ToUint8Array(process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY)
+      });
+      const res = await fetch("/api/subscriptions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(sub)
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   useEffect(() => {
     const loadSession = async () => {
       const session = await getSession();
       if (session?.user) {
-        const newUser = session.user as unknown as User;
-        console.log(session.user, newUser);
-        setUser(newUser);
+        const res = await fetch("/api/users/me");
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data);
+        }
       }
     }
     loadSession();
   }, []);
+
+  useEffect(() => {
+    navigator.serviceWorker.ready.then(reg => {
+      reg.pushManager.getSubscription().then(sub => {
+        if (sub && !(sub.expirationTime && Date.now() > sub.expirationTime - 5 * 60 * 1000)) {
+          
+        }
+        else {
+          subscribe(reg);
+        }
+      });
+    });
+  }, [ user ])
 
 
   return (
