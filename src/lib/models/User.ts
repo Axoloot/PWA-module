@@ -14,6 +14,6 @@ const userSchema = new Schema<IUser>({
   password: { type: String, required: true },
   pushTokens: Array,
   profileImg: String,
-});
+}, { timestamps: true });
 
 export default models.User || model('User', userSchema);;

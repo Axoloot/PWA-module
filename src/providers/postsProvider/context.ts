@@ -1,18 +1,7 @@
+import { IPost } from '../../lib/models/Post';
 import createCtx from '../createCtx';
 
 declare global {
-  interface Post {
-    email: string,
-    pseudo: string,
-    profilImg?: string,
-  }
-
-  interface Post {
-    title: string;
-    author: string;
-    date: string;
-    content: string;
-  }
 
   type PostCtxValue = {
     subscribe: () => Promise<void>;
@@ -20,8 +9,8 @@ declare global {
     like: (id: string) => Promise<void>;
     unlike: (id: string) => Promise<void>;
     fetchPosts: () => Promise<void>;
-    submitPost: (e: any) => Promise<void>;
-    posts: Post[];
+    submitPost: (post: IPost) => Promise<void>;
+    posts: IPost[];
   };
 }
 

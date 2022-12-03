@@ -1,13 +1,8 @@
 import React from 'react';
+import { IUser } from '../../lib/models/User';
 import createCtx from '../createCtx';
 
 declare global {
-  interface User {
-    id: { type: String, required: true },
-    pseudo: { type: String, required: true },
-    email: { type: String, required: true },
-    profileImg: String
-  }
   interface SignUpPayload {
     email: string;
     password: string;
@@ -16,7 +11,7 @@ declare global {
   }
 
   type UserCtxValue = {
-    user: User | null;
+    user: IUser | null;
     error: string | null;
     isAuthenticated: boolean;
     login: (email: string, password: string, redirect?: boolean, callback?: string) => Promise<boolean>;

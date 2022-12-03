@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import base64ToUint8Array from '../../lib/base64ToUint8Array';
+import { IPost } from '../../lib/models/Post';
 import PostContext from './context';
 
 export interface PostProviderProps {
@@ -29,22 +30,15 @@ function PostProvider({ children }: PostProviderProps): JSX.Element {
     }
   }
 
-  async function submitPost(e: any) {
-    e.preventDefault();
-
-    if (!subscription || !subscriptionData || !e.target.content.value) { return; }
+  async function submitPost(post: IPost) {
 
     try {
-      const data = {
-        subscriber: subscriptionData,
-        content: e.target.content.value
-      };
       const res = await fetch("/api/posts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(post)
       });
       if (res.ok) {
         fetchPosts();

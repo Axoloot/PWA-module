@@ -2,19 +2,33 @@ import { Text } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
 import Layout from "../../components/layout";
+import { usePostContext } from "../../providers/postsProvider";
+import { useUserContext } from "../../providers/userProvider";
+
+interface Coords {
+  lat: number;
+  lng: number;
+}
 
 const Index = () => {
   const [desc, setDesc] = useState('');
   const [title, setTitle] = useState('');
-  const [pos, setPos] = useState(undefined);
-
+  const [pos, setPos] = useState<Coords | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
+  const { submitPost } = usePostContext();
+  const { user } = useUserContext();
   useEffect(() => {
     if (!pos) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        setPos({ lat: position.coords.latitude, lng: position.coords.longitude });
-      });
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          setPos({ lat: position.coords.latitude, lng: position.coords.longitude });
+          setLoading(false);
+        }, function (err) {
+          setLoading(false);
+        }
+      );
     }
-  });
+  }, []);
 
   return (
     <Layout menuIndex={-1}>
@@ -35,12 +49,22 @@ const Index = () => {
           style={{ width: 400, height: 100 }}
           onChange={(e) => setDesc(e.target.value)}
         />
+        {pos && JSON.stringify(pos)}
+        {loading && "loading"}
         {!pos && (
           <Text h6 color="#480048" style={{ marginTop: 60 }}>
-            ce post ne sera pas lié à une localisation (vous n'avez pas accepté de la partager)
+            {
+              loading ?
+                'chargement' :
+                "ce post ne sera pas lié à une localisation (vous n'avez pas accepté de la partager)"
+            }
           </Text>
         )}
-        <button style={{ backgroundColor: '#380038', cursor: 'pointer', width: 150, height: 40, borderRadius: 5, marginTop: pos ? 60 : 5 }}>
+        <button
+          onClick={() =>
+            submitPost({ title, content: desc, author: user?.pseudo ?? 'Anonyme', geolocation: pos })}
+          style={{ backgroundColor: '#380038', cursor: 'pointer', width: 150, height: 40, borderRadius: 5, marginTop: pos ? 60 : 5 }}
+        >
           <Text h4 color="#F2F2F2" style={{ padding: 0, margin: 0 }}>
             POSTER
           </Text>

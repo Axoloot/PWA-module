@@ -1,15 +1,13 @@
+import mongoose from "mongoose";
 import Post from "../../../../lib/models/Post";
 
 export default function handler(req, res) {
   try {
     let { id } = req.query;
-    if (!(id = parseInt(id))) {
-      return (res.status(400).json({ error: "Bad Request" }));
-    }
 
     switch (req.method) {
       case ("GET"):
-        const post = Post.get(id);
+        const post = Post.find({ _id: new mongoose.Types.ObjectId(id) });
 
         if (!post) {
           return (res.status(404).json({ error: "Not found" }));

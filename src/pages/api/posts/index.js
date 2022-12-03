@@ -3,28 +3,27 @@ import Post from "../../../lib/models/Post";
 
 import notify from "src/lib/notify";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   try {
     switch (req.method) {
       case ("GET"):
-        const posts = Post.find();
+        const posts = await Post.find({});
 
         return (res.status(200).json(posts));
 
       case ("POST"):
-        if (!req.body?.subscriber?.keys?.auth) {
-          return (res.status(400).json({ error: "Bad Request" }));
-        }
+        // if (!req.body?.subscriber?.keys?.auth) {
+        //   return (res.status(400).json({ error: "Bad Request" }));
+        // }
 
-        const subscriber = Subscriptions.findOne({ "keys.auth": req.body.subscriber.keys.auth });
+        // const subscriber = Subscriptions.findOne({ "keys.auth": req.body.subscriber.keys.auth });
 
-        if (!subscriber) {
-          return (res.status(404).json({ error: "Subscriber Not Found" }));
-        }
+        // if (!subscriber) {
+        //   return (res.status(404).json({ error: "Subscriber Not Found" }));
+        // }
 
-        const post = Posts.insert({ subscriber: subscriber, content: req.body?.content, likes: [] });
-
-        notify.notifyAll({ title: "New post from " + subscriber?.keys?.p256dh?.slice(0, 8), message: post.content }, [subscriber]);
+        const post = await Post(req.body).save();
+        // notify.notifyAll({ title: "New post from " + subscriber?.keys?.p256dh?.slice(0, 8), message: post.content }, [subscriber]);
 
         return (res.status(201).json(post));
 

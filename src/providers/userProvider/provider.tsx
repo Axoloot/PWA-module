@@ -10,8 +10,8 @@ function UserProvider({ children }: UserProviderProps): JSX.Element {
   const [error, setError] = useState<string | null>(null);
 
   const logout = useCallback((): void => {
-    signOut();
     setUser(null);
+    signOut({ callbackUrl: '/' });
   }, [signOut]);
 
   const signup = useCallback(
@@ -46,7 +46,7 @@ function UserProvider({ children }: UserProviderProps): JSX.Element {
       const session = await getSession();
       if (session?.user) {
         const newUser = session.user as unknown as User;
-        console.log(newUser);
+        console.log(session.user, newUser);
         setUser(newUser);
       }
     }

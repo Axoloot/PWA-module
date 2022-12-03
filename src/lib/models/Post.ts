@@ -1,11 +1,12 @@
 import { model, models, Schema } from "mongoose";
-
-interface IPost {
+import QDM from '../../QDM.json';
+export interface IPost {
+  _id?: string;
   title: string;
   content: string;
-  likes: number;
+  likes?: number;
   author: string;
-  geolocation: {
+  geolocation?: {
     lat: number;
     lng: number;
   }
@@ -17,7 +18,6 @@ const PostSchema = new Schema<IPost>({
   likes: { type: Number, default: 0 },
   author: { type: String, required: true },
   geolocation: Object,
-});
-
+}, { timestamps: true });
 
 export default models.Post || model("Post", PostSchema);

@@ -1,8 +1,11 @@
-const ArticlesList = ({ articles }: any) => (
+import { IPost } from "../../lib/models/Post";
+import Article from "../article";
+
+const ArticlesList = ({ posts }: { posts: IPost[]}) => (
   <div style={{ display: 'flex', flexDirection: 'column', width: '100%', }}>
-    {articles.map((Article: any) => (
+    {posts.map((post: any) => (
       <div style={{ paddingBottom: 20 }}>
-        <Article />
+        <Article post={post} fav />
       </div>
     ))}
   </div>

@@ -14,7 +14,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      router.push("/home");
+     router.push("/home");
     }
   }, [ user ])
 
