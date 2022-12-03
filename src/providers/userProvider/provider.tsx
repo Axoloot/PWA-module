@@ -25,12 +25,13 @@ function UserProvider({ children }: UserProviderProps): JSX.Element {
         },
         body: JSON.stringify(payload),
       });
+      // setTimeout(() => signIn("credentials", { email: payload.email, password: payload.password, redirect: true, callbackUrl: '/home' }), 200);
       return !!res;
     },
     [setUser]);
 
   const login = useCallback(async (email: string, password: string, redirect = true, callbackUrl = "/home"): Promise<boolean> => {
-    const signin = await signIn("credentials", { email, password, redirect, callbackUrl });
+    const signin = await signIn("credentials", { email, password, redirect, callbackUrl,  });
     if (signin?.ok) {
       const session = await getSession();
 
@@ -90,7 +91,7 @@ function UserProvider({ children }: UserProviderProps): JSX.Element {
         });
       });
     }
-  }, [ user ])
+  }, [user])
 
 
   return (

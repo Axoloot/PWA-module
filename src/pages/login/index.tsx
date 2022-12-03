@@ -28,20 +28,20 @@ const Login = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        <Image alt="logo" src={logoSvg} width={150} height={150} style={{ marginTop: '-7%' }} />
+        <Image alt="logo" src={logoSvg} width={150} height={150} style={{ padding: '1em' }} />
         <div
           style={{
-            width: '30%',
-            height: '50%',
+            // width: '30%',
+            // height: '50%',
             display: 'flex',
-            marginTop: '5%',
+            padding: '0 10em',
             borderRadius: 15,
             alignItems: 'center',
             flexDirection: 'column',
             justifyContent: 'center',
             backgroundColor: '#2d002d',
           }}>
-          <Text h6 color="#F2F2F2">
+          <Text h6 color="#F2F2F2" style={{ margin: '1em ' }}>
             Email
           </Text>
           <input
@@ -49,7 +49,7 @@ const Login = () => {
             className="form-input"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <Text h6 color="#F2F2F2">
+          <Text h6 color="#F2F2F2" style={{ margin: '1em ' }}>
             Password
           </Text>
           <input
@@ -61,14 +61,14 @@ const Login = () => {
             onClick={async () => {
               await login(email, password);
             }}
-            style={{ backgroundColor: '#F2F2F2', borderRadius: 15, width: 150, height: 50, cursor: 'pointer', marginTop: 60 }}
+            style={{ backgroundColor: '#F2F2F2', borderRadius: 15, width: 150, height: 50, cursor: 'pointer', marginTop: '1em' }}
           >
             <Text h4 color="#2d002d" style={{ padding: 0, margin: 0 }}>
               LOGIN
             </Text>
           </button>
           <Link href="/register">
-            <Text h6 color="#F2F2F2" style={{ textDecoration: 'underline', marginTop: 30 }}>
+            <Text h6 color="#F2F2F2" style={{ textDecoration: 'underline', marginTop: "1em"}}>
               créer un compte
             </Text>
           </Link>

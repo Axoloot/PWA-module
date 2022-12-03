@@ -22,20 +22,21 @@ const Login = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        <Image alt="logo" src={logoSvg} width={150} height={150} />
+        <Image alt="logo" src={logoSvg} width={150} height={150} style={{ margin: '1em ' }} />
         <div
           style={{
-            width: '30%',
-            height: '60%',
+            // width: '30%',
+            // height: '60%',
             display: 'flex',
-            marginTop: '5%',
+            padding: '0 10em',
+            // marginTop: '5%',
             borderRadius: 15,
             alignItems: 'center',
             flexDirection: 'column',
             justifyContent: 'center',
             backgroundColor: '#2d002d',
           }}>
-          <Text h6 color="#F2F2F2">
+          <Text h6 color="#F2F2F2" style={{ margin: '1em ' }}>
             Pseudo
           </Text>
           <input
@@ -43,7 +44,7 @@ const Login = () => {
             className="form-input"
             onChange={(e) => setPseudo(e.target.value)}
           />
-          <Text h6 color="#F2F2F2">
+          <Text h6 color="#F2F2F2" style={{ margin: '1em ' }}>
             Email
           </Text>
           <input
@@ -51,7 +52,7 @@ const Login = () => {
             className="form-input"
             onChange={(e) => setEmail(e.target.value)}
           />
-          <Text h6 color="#F2F2F2">
+          <Text h6 color="#F2F2F2" style={{ margin: '1em ' }}>
             Photo de profile
           </Text>
           <input
@@ -59,7 +60,7 @@ const Login = () => {
             className="form-input"
             onChange={(e) => setProfilImg(e.target.value)}
           />
-          <Text h6 color="#F2F2F2">
+          <Text h6 color="#F2F2F2" style={{ margin: '1em ' }}>
             Password
           </Text>
           <input
@@ -68,14 +69,14 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button
-            onClick={() => signup({email, password, pseudo, profilImg})}
-            style={{ backgroundColor: '#F2F2F2', borderRadius: 15, width: 150, height: 50, cursor: 'pointer', marginTop: 60 }}>
+            onClick={() => signup({ email, password, pseudo, profilImg })}
+            style={{ backgroundColor: '#F2F2F2', borderRadius: 15, width: 150, height: 50, cursor: 'pointer', margin: '1em' }}>
             <Text h4 color="#2d002d" style={{ padding: 0, margin: 0 }}>
               CREER
             </Text>
           </button>
           <Link href="/">
-            <Text h6 color="#F2F2F2" style={{ textDecoration: 'underline', marginTop: 30 }}>
+            <Text h6 color="#F2F2F2" style={{ textDecoration: 'underline', margin: '1em' }}>
               se connecter
             </Text>
           </Link>

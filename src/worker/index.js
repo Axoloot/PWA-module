@@ -14,7 +14,7 @@ self.addEventListener("push", (event) => {
 });
 
 self.addEventListener('notificationclick', (event) => {
-  const url = 'http://localhost:3001/home';
+  const url = 'http://qdm.fundy.cf/home';
 
   event.waitUntil(
     clients.matchAll({type: 'window'}).then( windowClients => {

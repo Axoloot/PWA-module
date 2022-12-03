@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import User from "../../../lib/models/User";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from 'bcryptjs';
 
 export const authOptions = {
   session: {
@@ -8,6 +9,10 @@ export const authOptions = {
   },
   secret: "1234",
   debug: true,
+  pages: {
+    signIn: '/',
+    error: '/'
+  },
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -17,8 +22,9 @@ export const authOptions = {
       },
       async authorize(credentials, req) {
         const { email, password } = credentials
-        const user = await User.findOne({ email, password });
-        if (!!user) return user;
+        const user = await User.findOne({ email });
+        if (user && bcrypt.compareSync(password, user.password))
+          return user;
         return null;
       }
     })

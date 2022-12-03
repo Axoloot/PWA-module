@@ -1,12 +1,23 @@
 
 
 import UserModel from '../../../lib/models/User';
+import bcrypt from 'bcryptjs';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   try {
 
     switch (req.method) {
       case ("POST"):
+        const salt = bcrypt.genSaltSync(3);
+        var hash = bcrypt.hashSync(req.body.password, salt);
+        req.body.password = hash;
+        console.log(salt)
+
+        const users = await UserModel.find({ email: req.body.email });
+
+        if (users.length > 0)
+          return (res.status(400).end());
+
         const newUser = new UserModel(req.body);
         newUser.save();
         return (res.status(200).json(newUser));
