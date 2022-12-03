@@ -10,6 +10,8 @@ export interface IPost {
     lat: number;
     lng: number;
   }
+  createdAt?: Date;
+  modifiedAt?: Date;
 }
 
 const PostSchema = new Schema<IPost>({

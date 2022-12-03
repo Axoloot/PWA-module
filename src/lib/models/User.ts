@@ -6,6 +6,8 @@ export interface IUser {
   password: string;
   pushTokens?: Object[];
   profileImg?: string;
+  createdAt?: Date;
+  modifiedAt?: Date;
 }
 
 const userSchema = new Schema<IUser>({
